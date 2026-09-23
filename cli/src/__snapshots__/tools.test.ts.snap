@@ -125,7 +125,7 @@ model_auto_compact_token_limit = 117964
 tool_output_token_limit = 20000
 
 [model_providers.freellmapi]
-name = "FreeLLMAPI"
+name = "Dea Foundations"
 base_url = "http://localhost:3000/v1"
 wire_api = "responses"
 env_key = "FREELLMAPI_API_KEY"
@@ -149,7 +149,7 @@ exports[`tool generators > setup-codex with a named profile has stable golden ou
     {
       "content": "# freellmapi:start
 [model_providers.freellmapi]
-name = "FreeLLMAPI"
+name = "Dea Foundations"
 base_url = "http://localhost:3000/v1"
 wire_api = "responses"
 env_key = "FREELLMAPI_API_KEY"
@@ -177,11 +177,11 @@ exports[`tool generators > setup-continue has stable golden output 1`] = `
   "files": [
     {
       "content": "# freellmapi:start
-name: FreeLLMAPI
+name: Dea Foundations
 version: 1.0.0
 schema: v1
 models:
-  - name: FreeLLMAPI
+  - name: Dea Foundations
     provider: openai
     model: "fast-coder"
     apiBase: "http://localhost:3000/v1"
@@ -258,7 +258,7 @@ exports[`tool generators > setup-crush has stable golden output 1`] = `
                 "supports_attachments": false,
               },
             ],
-            "name": "FreeLLMAPI",
+            "name": "Dea Foundations",
             "type": "openai-compat",
           },
         },
@@ -303,7 +303,7 @@ exports[`tool generators > setup-dsh has stable golden output 1`] = `
               "api": "openai-completions",
               "apiKeyEnv": "FREELLMAPI_API_KEY",
               "baseURL": "http://localhost:3000/v1",
-              "displayName": "FreeLLMAPI",
+              "displayName": "Dea Foundations",
               "models": [
                 {
                   "contextWindow": 131072,
@@ -361,8 +361,8 @@ exports[`tool generators > setup-goose has stable golden output 1`] = `
       "value": {
         "api_key_env": "FREELLMAPI_API_KEY",
         "base_url": "http://localhost:3000/v1",
-        "description": "FreeLLMAPI OpenAI-compatible gateway",
-        "display_name": "FreeLLMAPI",
+        "description": "Dea Foundations OpenAI-compatible gateway",
+        "display_name": "Dea Foundations",
         "dynamic_models": false,
         "engine": "openai",
         "models": [
@@ -507,7 +507,7 @@ exports[`tool generators > setup-mimo has stable golden output 1`] = `
                 "name": "Reasoning Model",
               },
             },
-            "name": "FreeLLMAPI",
+            "name": "Dea Foundations",
             "npm": "@ai-sdk/openai-compatible",
             "options": {
               "apiKey": "{env:FREELLMAPI_API_KEY}",
@@ -633,7 +633,7 @@ exports[`tool generators > setup-opencode has stable golden output 1`] = `
                 "name": "Reasoning Model",
               },
             },
-            "name": "FreeLLMAPI",
+            "name": "Dea Foundations",
             "npm": "@ai-sdk/openai-compatible",
             "options": {
               "apiKey": "{env:FREELLMAPI_API_KEY}",

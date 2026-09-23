@@ -32,8 +32,16 @@ import { geminiRouter } from './routes/gemini.js';
 import { ollamaRouter } from './routes/ollama.js';
 import { urlTokenRouter } from './routes/url-tokens.js';
 import { updateRouter } from './routes/update.js';
+import { workspacesRouter } from './routes/workspaces.js';
+import { billingLedgerRouter } from './routes/billing-ledger.js';
+import { workspaceBotsRouter } from './routes/workspace-bots.js';
+import { creatorPayoutsRouter } from './routes/creator-payouts.js';
+import { clientManagementRouter } from './routes/client-management.js';
+import { clientPortalRouter } from './routes/client-portal.js';
+import { securityCenterRouter } from './routes/security-center.js';
 import { requireAuth } from './middleware/requireAuth.js';
 import { createProxyRateLimiter, createAdminRateLimiter } from './middleware/rateLimit.js';
+import { networkSecurity } from './middleware/networkSecurity.js';
 
 // Password-guess ceiling for GET /api/keys/export. Deliberately low: a real
 // user exports keys occasionally, never ten times a minute.
@@ -96,6 +104,8 @@ function isTrustworthyOrigin(req: express.Request): boolean {
 export function createApp(config?: Config) {
   const cfg = config ?? loadConfig();
   const app = express();
+  app.disable('x-powered-by');
+  app.use(networkSecurity);
   // TRUST_PROXY (#1024): opt-in trust of X-Forwarded-* from a reverse proxy.
   // false (default) ignores forwarded headers so direct callers cannot spoof
   // the client IP; true trusts every hop; a comma-separated list of addresses
@@ -269,6 +279,13 @@ export function createApp(config?: Config) {
   app.use('/api/cache', requireAuth, cacheRouter);
   app.use('/api/compression', requireAuth, compressionRouter);
   app.use('/api/update', requireAuth, updateRouter);
+  app.use('/api/workspaces', requireAuth, workspacesRouter);
+  app.use('/api/billing', requireAuth, billingLedgerRouter);
+  app.use('/api/workspace-bots', requireAuth, workspaceBotsRouter);
+  app.use('/api/creator-payouts', requireAuth, creatorPayoutsRouter);
+  app.use('/api/client-management', requireAuth, clientManagementRouter);
+  app.use('/api/client-portal', clientPortalRouter);
+  app.use('/api/security-center', requireAuth, securityCenterRouter);
 
   // Health check — no auth required.
   app.get('/api/ping', (_req, res) => {

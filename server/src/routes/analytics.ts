@@ -390,6 +390,41 @@ analyticsRouter.get('/by-client', (req: Request, res: Response) => {
   })));
 });
 
+// Privacy-aware client usage rollup for product and data-science reporting.
+// It deliberately reports client agent/request type, not raw API keys or IPs.
+analyticsRouter.get('/client-usage', (req: Request, res: Response) => {
+  const range = (req.query.range as string) ?? '30d';
+  const since = getSinceTimestamp(range);
+  const rows = getDb().prepare(`
+    SELECT
+      COALESCE(client_agent, 'unknown') AS client_agent,
+      request_type,
+      COUNT(*) AS requests,
+      SUM(CASE WHEN status = 'success' THEN 1 ELSE 0 END) AS successes,
+      SUM(CASE WHEN status = 'error' THEN 1 ELSE 0 END) AS errors,
+      SUM(input_tokens) AS input_tokens,
+      SUM(output_tokens) AS output_tokens,
+      AVG(latency_ms) AS avg_latency_ms,
+      MAX(strftime('%Y-%m-%dT%H:%M:%SZ', created_at)) AS last_seen_at
+    FROM requests
+    WHERE created_at >= ?
+    GROUP BY client_agent, request_type
+    ORDER BY requests DESC
+    LIMIT 500
+  `).all(since) as { client_agent: string; request_type: string; requests: number; successes: number; errors: number; input_tokens: number; output_tokens: number; avg_latency_ms: number | null; last_seen_at: string | null }[];
+  res.json(rows.map(row => ({
+    clientAgent: row.client_agent,
+    requestType: row.request_type,
+    requests: row.requests,
+    successes: row.successes ?? 0,
+    errors: row.errors ?? 0,
+    inputTokens: row.input_tokens ?? 0,
+    outputTokens: row.output_tokens ?? 0,
+    averageLatencyMs: row.avg_latency_ms == null ? null : Math.round(row.avg_latency_ms),
+    lastSeenAt: row.last_seen_at,
+  })));
+});
+
 // Stats grouped by API key. Raw-row scoped (the hourly aggregate has no key
 // dimension), LEFT JOINed to api_keys so a request whose key was later deleted
 // still shows up with a null label — the keyId is always returned.

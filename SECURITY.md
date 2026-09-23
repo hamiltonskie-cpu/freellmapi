@@ -1,6 +1,6 @@
 # Security Policy
 
-FreeLLMAPI holds real credentials: your provider API keys (encrypted at rest in
+Dea Foundations holds real credentials: your provider API keys (encrypted at rest in
 SQLite), a unified `/v1` bearer token, and a dashboard account. Bugs that expose
 any of those are taken seriously. Thanks for reporting them responsibly.
 
@@ -67,7 +67,7 @@ Out of scope:
 - Vulnerabilities in upstream LLM providers themselves. Report those to the
   provider. Bugs in *how this router talks to them* are in scope.
 - Anything that requires the operator to deliberately expose the server to the
-  public internet. FreeLLMAPI is a single-user, trusted-network tool: it binds
+  public internet. Dea Foundations is a single-user, trusted-network tool: it binds
   `127.0.0.1` by default, `HOST_BIND=0.0.0.0` is a documented opt-in with a
   warning attached, and there is no multi-tenant auth by design. "I put it on a
   public IP and someone used my quota" is expected behaviour, not a vulnerability.
@@ -89,3 +89,40 @@ Out of scope:
 - **Rotate what leaks.** Regenerate the unified API key from the Keys page if a
   client that held it is compromised, and swap out suspect provider keys — the
   router falls over to sibling keys, so a rotation is not an outage.
+
+### Network firewall baseline
+
+The application now rejects TRACE, TRACK, and CONNECT requests, limits request
+URL and header sizes, disables the Express fingerprint header, and marks API
+responses as non-cacheable. These controls protect the HTTP boundary, but they
+are not a host firewall.
+
+Keep Docker bound to localhost unless a reverse proxy is deliberately in front
+of it:
+
+```sh
+HOST_BIND=127.0.0.1 docker compose up -d
+```
+
+For a LAN deployment, allow only the reverse-proxy port in the host firewall,
+keep port `3001` private, terminate TLS at the proxy, and set `TRUST_PROXY` to
+the proxy address or exact hop count. Do not set `TRUST_PROXY=true` on an
+untrusted network: that allows callers to forge forwarded client IP headers.
+
+### Numeric and payment safety
+
+Payment amounts are stored as positive integer minor units, such as cents, not
+floating-point currency values. Inputs must be finite safe integers and must
+match the workspace ISO-4217 currency. Payment intents are idempotent, and a
+compliance approval is required before a ledger credit can be settled.
+
+South African workspaces can record `ZA`/`ZAR` with PayFast or Yoco as the
+intended provider. Those provider adapters remain disabled until merchant
+credentials, signed webhook verification, refund handling, and local compliance
+review are configured; the server will return `501` rather than silently using
+the internal ledger for an external-provider workspace.
+
+Do not add a user-supplied formula evaluator with `eval`, `Function`, or a
+general-purpose expression interpreter. Any future calculation endpoint must
+use an allowlisted operation set, finite-number checks, explicit bounds, and
+tests for overflow, division by zero, NaN, and Infinity.

@@ -120,7 +120,7 @@ function AuthForm({ mode, onAuthed }: { mode: 'setup' | 'login'; onAuthed: () =>
     <Centered>
       <div className="mb-6 flex items-center gap-2">
         <span className="inline-block size-2 rounded-full bg-foreground" />
-        <span className="font-semibold tracking-tight text-sm">FreeLLMAPI</span>
+        <span className="font-semibold tracking-tight text-sm">Dea Foundations</span>
       </div>
       <div className="rounded-3xl border bg-card p-6">
         <h1 className="text-lg font-semibold tracking-tight">{isSetup ? t('auth.createYourAccount') : t('auth.signIn')}</h1>
@@ -258,7 +258,7 @@ function ForgotPasswordForm({ onBack }: { onBack: () => void }) {
     <Centered>
       <div className="mb-6 flex items-center gap-2">
         <span className="inline-block size-2 rounded-full bg-foreground" />
-        <span className="font-semibold tracking-tight text-sm">FreeLLMAPI</span>
+        <span className="font-semibold tracking-tight text-sm">Dea Foundations</span>
       </div>
       <div className="rounded-3xl border bg-card p-6">
         <h1 className="text-base font-medium">{t('auth.forgotPassword')}</h1>
@@ -439,11 +439,13 @@ export function ChangeCredentialsModal({ mode, onClose }: ChangeCredentialsModal
 
 export function AuthGate({ children }: { children: ReactNode }) {
   const { t } = useI18n()
+  const isClientPortal = typeof window !== 'undefined' && window.location.pathname.includes('/client-portal/')
   const queryClient = useQueryClient()
   const { data, isLoading, isError, refetch } = useQuery<AuthStatus>({
     queryKey: ['auth-status'],
     queryFn: () => apiFetch('/api/auth/status'),
     retry: false,
+    enabled: !isClientPortal,
   })
 
   useEffect(() => {
@@ -451,6 +453,8 @@ export function AuthGate({ children }: { children: ReactNode }) {
     window.addEventListener(UNAUTHORIZED_EVENT, handler)
     return () => window.removeEventListener(UNAUTHORIZED_EVENT, handler)
   }, [refetch])
+
+  if (isClientPortal) return <>{children}</>
 
   // Desktop self-repair: one attempt at a time, and none after the shell has
   // handed back a session the server still rejects — a broken install shows a

@@ -36,6 +36,13 @@ import * as responseCache from '../migrations/20260903_000002_response_cache.js'
 import * as keyMonthlyBudget from '../migrations/20260904_000001_key_monthly_budget.js';
 import * as keyMonthlyUsage from '../migrations/20260914_000001_key_monthly_usage.js';
 import * as quotaSnapshotFreshness from '../migrations/20260915_000001_quota_snapshot_freshness.js';
+import * as workspacesBillingBots from '../migrations/20260923_000001_workspaces_billing_bots.js';
+import * as workspaceJurisdiction from '../migrations/20260923_000002_workspace_jurisdiction.js';
+import * as creatorPayouts from '../migrations/20260923_000003_creator_payouts.js';
+import * as workspaceIndustry from '../migrations/20260923_000004_workspace_industry.js';
+import * as engineeringBot from '../migrations/20260923_000005_engineering_bot.js';
+import * as clientOnboarding from '../migrations/20260923_000006_client_onboarding.js';
+import * as securityProfilesIncidents from '../migrations/20260923_000007_security_profiles_incidents.js';
 
 export interface MigrationModule {
   up(db: Db): void;
@@ -84,6 +91,13 @@ export const RESPONSE_CACHE_FILENAME = '20260903_000002_response_cache.ts';
 export const KEY_MONTHLY_BUDGET_FILENAME = '20260904_000001_key_monthly_budget.ts';
 export const KEY_MONTHLY_USAGE_FILENAME = '20260914_000001_key_monthly_usage.ts';
 export const QUOTA_SNAPSHOT_FRESHNESS_FILENAME = '20260915_000001_quota_snapshot_freshness.ts';
+export const WORKSPACES_BILLING_BOTS_FILENAME = '20260923_000001_workspaces_billing_bots.ts';
+export const WORKSPACE_JURISDICTION_FILENAME = '20260923_000002_workspace_jurisdiction.ts';
+export const CREATOR_PAYOUTS_FILENAME = '20260923_000003_creator_payouts.ts';
+export const WORKSPACE_INDUSTRY_FILENAME = '20260923_000004_workspace_industry.ts';
+export const ENGINEERING_BOT_FILENAME = '20260923_000005_engineering_bot.ts';
+export const CLIENT_ONBOARDING_FILENAME = '20260923_000006_client_onboarding.ts';
+export const SECURITY_PROFILES_INCIDENTS_FILENAME = '20260923_000007_security_profiles_incidents.ts';
 
 export const DEFAULT_MIGRATIONS: readonly DefaultMigration[] = [
   { filename: LEGACY_BASELINE_FILENAME, module: legacyBaseline },
@@ -123,4 +137,11 @@ export const DEFAULT_MIGRATIONS: readonly DefaultMigration[] = [
   { filename: KEY_MONTHLY_BUDGET_FILENAME, module: keyMonthlyBudget },
   { filename: KEY_MONTHLY_USAGE_FILENAME, module: keyMonthlyUsage },
   { filename: QUOTA_SNAPSHOT_FRESHNESS_FILENAME, module: quotaSnapshotFreshness },
+  { filename: WORKSPACES_BILLING_BOTS_FILENAME, module: workspacesBillingBots },
+  { filename: WORKSPACE_JURISDICTION_FILENAME, module: workspaceJurisdiction },
+  { filename: CREATOR_PAYOUTS_FILENAME, module: creatorPayouts },
+  { filename: WORKSPACE_INDUSTRY_FILENAME, module: workspaceIndustry },
+  { filename: ENGINEERING_BOT_FILENAME, module: engineeringBot },
+  { filename: CLIENT_ONBOARDING_FILENAME, module: clientOnboarding },
+  { filename: SECURITY_PROFILES_INCIDENTS_FILENAME, module: securityProfilesIncidents },
 ];

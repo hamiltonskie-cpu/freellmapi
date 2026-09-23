@@ -41,6 +41,13 @@ const RESPONSE_CACHE_FILENAME = '20260903_000002_response_cache.ts';
 const KEY_MONTHLY_BUDGET_FILENAME = '20260904_000001_key_monthly_budget.ts';
 const KEY_MONTHLY_USAGE_FILENAME = '20260914_000001_key_monthly_usage.ts';
 const QUOTA_SNAPSHOT_FRESHNESS_FILENAME = '20260915_000001_quota_snapshot_freshness.ts';
+const WORKSPACES_BILLING_BOTS_FILENAME = '20260923_000001_workspaces_billing_bots.ts';
+const WORKSPACE_JURISDICTION_FILENAME = '20260923_000002_workspace_jurisdiction.ts';
+const CREATOR_PAYOUTS_FILENAME = '20260923_000003_creator_payouts.ts';
+const WORKSPACE_INDUSTRY_FILENAME = '20260923_000004_workspace_industry.ts';
+const ENGINEERING_BOT_FILENAME = '20260923_000005_engineering_bot.ts';
+const CLIENT_ONBOARDING_FILENAME = '20260923_000006_client_onboarding.ts';
+const SECURITY_PROFILES_INCIDENTS_FILENAME = '20260923_000007_security_profiles_incidents.ts';
 
 interface SchemaRow {
   type: string;
@@ -128,6 +135,13 @@ describe('migration round trip', () => {
         KEY_MONTHLY_BUDGET_FILENAME,
         KEY_MONTHLY_USAGE_FILENAME,
         QUOTA_SNAPSHOT_FRESHNESS_FILENAME,
+        WORKSPACES_BILLING_BOTS_FILENAME,
+        WORKSPACE_JURISDICTION_FILENAME,
+        CREATOR_PAYOUTS_FILENAME,
+        WORKSPACE_INDUSTRY_FILENAME,
+        ENGINEERING_BOT_FILENAME,
+        CLIENT_ONBOARDING_FILENAME,
+        SECURITY_PROFILES_INCIDENTS_FILENAME,
       ]);
     } finally {
       db.close();

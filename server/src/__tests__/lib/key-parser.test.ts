@@ -153,7 +153,7 @@ describe('key parser', () => {
     expect(looksLikeApiKey('sk-valid-token')).toBe(true);
   });
 
-  it('parses FreeLLMAPI export JSON format', () => {
+  it('parses Dea Foundations export JSON format', () => {
     const exportJson = JSON.stringify({
       version: 1,
       exportedAt: '2026-07-06T12:00:00Z',

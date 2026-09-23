@@ -4,7 +4,7 @@
 
 ## Scope
 
-This domain holds the implementation deep-dives for FreeLLMAPI's server-side architecture. Each file expands one subsystem with source pointers, scoring formulas, state machines and commit-tagged history. For the high-level summary — what the system is, how a request flows, honest limitations and the provider ToS review — see the high-level index [00-high-level-index.md](00-high-level-index.md).
+This domain holds the implementation deep-dives for Dea Foundations's server-side architecture. Each file expands one subsystem with source pointers, scoring formulas, state machines and commit-tagged history. For the high-level summary — what the system is, how a request flows, honest limitations and the provider ToS review — see the high-level index [00-high-level-index.md](00-high-level-index.md).
 
 ## File Index
 

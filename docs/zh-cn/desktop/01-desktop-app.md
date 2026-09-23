@@ -26,7 +26,7 @@ bundle:server → build:main / build:preload → stage:client → electron-build
 | `<userData>/backups` | 服务端转储（`services/backups.ts` `dataDir()`） |
 | `Resources/client-dist` | 已打包客户端；开发环境：经 `FREEAPI_REPO` 的 `client/dist` |
 
-`~/Library/Application Support/FreeLLMAPI`（macOS）、`%APPDATA%/FreeLLMAPI`（Windows）、`~/.config/FreeLLMAPI`（Linux）。
+`~/Library/Application Support/Dea Foundations`（macOS）、`%APPDATA%/Dea Foundations`（Windows）、`~/.config/Dea Foundations`（Linux）。
 
 ## 内嵌 server-host
 
@@ -50,7 +50,7 @@ bundle:server → build:main / build:preload → stage:client → electron-build
 
 ## 托盘 / 悬浮窗 / 窗口
 
-- `desktop/src/tray.ts` —— 菜单栏图标、`打开日志文件夹` / `打开备份文件夹`（`logger.ts:openLogsFolder`/`openBackupsFolder` 经 `shell.openPath`）、`打开 FreeLLMAPI`、退出。
+- `desktop/src/tray.ts` —— 菜单栏图标、`打开日志文件夹` / `打开备份文件夹`（`logger.ts:openLogsFolder`/`openBackupsFolder` 经 `shell.openPath`）、`打开 Dea Foundations`、退出。
 - `desktop/src/popover.ts` —— 用于快捷访问的悬浮窗。
 - `desktop/src/window.ts` —— 主 BrowserWindow 外观。
 

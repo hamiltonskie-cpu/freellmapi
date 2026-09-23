@@ -132,7 +132,7 @@ describe('tool generators', () => {
   it('generates a complete Continue v1 config with Agent tool support', () => {
     const config = tools.find(tool => tool.id === 'continue')!
       .generate(context).files[0].content!;
-    expect(config).toContain('name: FreeLLMAPI');
+    expect(config).toContain('name: Dea Foundations');
     expect(config).toContain('version: 1.0.0');
     expect(config).toContain('schema: v1');
     expect(config).toContain('      - tool_use');

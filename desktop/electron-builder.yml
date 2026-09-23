@@ -1,5 +1,5 @@
 appId: com.freellmapi.desktop
-productName: FreeLLMAPI
+productName: Dea Foundations
 directories:
   output: dist-electron
 files:

@@ -127,7 +127,7 @@ async function promptForKey(): Promise<string> {
     terminal: true,
   });
   try {
-    const answer = rl.question('FreeLLMAPI unified API key: ');
+    const answer = rl.question('Dea Foundations unified API key: ');
     muted = true;
     const value = (await answer).trim();
     muted = false;
@@ -153,7 +153,7 @@ async function catalog(url: string, apiKey: string, availableOnly = true): Promi
       : undefined;
     const reason = cause ?? (error instanceof Error ? error.message : String(error));
     throw new Error(
-      `Could not reach the FreeLLMAPI gateway at ${rootUrl(url)} (${reason}). `
+      `Could not reach the Dea Foundations gateway at ${rootUrl(url)} (${reason}). `
       + 'Check that the server is running, or point the CLI at it with --url or FREELLMAPI_URL.',
     );
   }
@@ -242,7 +242,7 @@ export function resolvePinnedModel(
 
 function help(): string {
   return [
-    'FreeLLMAPI coding-agent setup',
+    'Dea Foundations coding-agent setup',
     '',
     'Usage:',
     '  freellmapi <command> [--url URL] [--api-key KEY] [--profile NAME] [--model ID] [--dry-run]',
@@ -397,7 +397,7 @@ export function codexArgs(url: string, selected: string): string[] {
   return [
     '-c', 'model_provider="freellmapi"',
     '-c', `model=${JSON.stringify(selected)}`,
-    '-c', 'model_providers.freellmapi.name="FreeLLMAPI"',
+    '-c', 'model_providers.freellmapi.name="Dea Foundations"',
     '-c', `model_providers.freellmapi.base_url=${JSON.stringify(`${rootUrl(url)}/v1`)}`,
     '-c', 'model_providers.freellmapi.wire_api="responses"',
     '-c', 'model_providers.freellmapi.env_key="FREELLMAPI_API_KEY"',

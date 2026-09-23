@@ -4,13 +4,13 @@
   "provider": {
     "freellmapi": {
       "npm": "@ai-sdk/openai-compatible",
-      "name": "FreeLLMAPI (local)",
+      "name": "Dea Foundations (local)",
       "options": {
         "baseURL": "http://127.0.0.1:3001/v1"
       },
       "models": {
         "auto": {
-          "name": "FreeLLMAPI Auto Router",
+          "name": "Dea Foundations Auto Router",
           "limit": {
             "context": 1048576,
             "output": 65536

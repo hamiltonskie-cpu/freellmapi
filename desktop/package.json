@@ -1,7 +1,7 @@
 {
   "name": "freellmapi-desktop",
   "version": "0.11.1",
-  "description": "FreeLLMAPI menu-bar app — local OpenAI-compatible LLM router",
+  "description": "Dea Foundations menu-bar app — local OpenAI-compatible LLM router",
   "author": {
     "name": "tashfeenahmed",
     "email": "tashfene@gmail.com",

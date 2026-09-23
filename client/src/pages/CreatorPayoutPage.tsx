@@ -1,0 +1,22 @@
+import { useState } from 'react'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { CheckCircle2, CreditCard, ShieldCheck } from 'lucide-react'
+import { apiFetch } from '@/lib/api'
+
+type PayoutAccount = { id: number; provider: string; countryCode: string; maskedAccount: string; priority: number; shareBps: number; enabled: boolean }
+
+function CreatorPayoutPage() {
+  const queryClient = useQueryClient()
+  const [email, setEmail] = useState('')
+  const [countryCode, setCountryCode] = useState('ZA')
+  const [share, setShare] = useState('70')
+  const accounts = useQuery({ queryKey: ['creator-payouts'], queryFn: () => apiFetch<{ accounts: PayoutAccount[] }>('/api/creator-payouts') })
+  const addAccount = useMutation({
+    mutationFn: () => apiFetch('/api/creator-payouts/paypal', { method: 'POST', body: JSON.stringify({ countryCode, accountEmail: email, shareBps: Math.round(Number(share) * 100) }) }),
+    onSuccess: () => { setEmail(''); void queryClient.invalidateQueries({ queryKey: ['creator-payouts'] }) },
+  })
+
+  return <div className="min-h-[calc(100vh-60px)] bg-[#f7f8f6] px-4 py-10 text-[#1d2c2a] sm:px-8"><div className="mx-auto max-w-2xl"><div className="mb-8"><p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#287b5b]">Creator payouts</p><h1 className="mt-3 text-3xl font-semibold tracking-[-0.04em]">Your first payout account</h1><p className="mt-2 text-sm leading-6 text-[#74827e]">Settled funds are allocated to your creator reserve before operating costs. PayPal transfers remain pending until a verified merchant adapter is configured.</p></div><section className="rounded-2xl border border-[#e4e9e5] bg-white p-6 shadow-sm"><div className="mb-5 flex items-center gap-3"><span className="flex size-10 items-center justify-center rounded-xl bg-[#d9f3e8] text-[#287b5b]"><CreditCard size={19} /></span><div><h2 className="font-semibold">Add PayPal account</h2><p className="text-xs text-[#8b9793]">Only the account reference is stored, encrypted at rest.</p></div></div><form onSubmit={(event) => { event.preventDefault(); addAccount.mutate() }} className="space-y-4"><label className="block text-sm font-medium">PayPal account email<input required type="email" value={email} onChange={(event) => setEmail(event.target.value)} placeholder="creator@example.com" className="mt-2 h-11 w-full rounded-lg border border-[#e0e6e2] px-3 outline-none focus:border-[#7eaf98]" /></label><div className="grid gap-4 sm:grid-cols-2"><label className="block text-sm font-medium">Jurisdiction<select value={countryCode} onChange={(event) => setCountryCode(event.target.value)} className="mt-2 h-11 w-full rounded-lg border border-[#e0e6e2] bg-white px-3 outline-none focus:border-[#7eaf98]"><option value="ZA">South Africa</option><option value="US">United States</option></select></label><label className="block text-sm font-medium">Creator share (%)<input required type="number" min="1" max="100" value={share} onChange={(event) => setShare(event.target.value)} className="mt-2 h-11 w-full rounded-lg border border-[#e0e6e2] px-3 outline-none focus:border-[#7eaf98]" /></label></div><button disabled={addAccount.isPending} type="submit" className="rounded-lg bg-[#287b5b] px-4 py-2.5 text-sm font-semibold text-white disabled:opacity-60">Save PayPal account</button></form><p className="mt-5 flex gap-2 rounded-xl bg-[#fff8e5] p-3 text-xs leading-5 text-[#80651c]"><ShieldCheck size={15} className="mt-0.5 shrink-0" />This creates a pending payout allocation. It does not claim that money was transferred.</p></section>{accounts.data?.accounts.length ? <section className="mt-5 rounded-2xl border border-[#e4e9e5] bg-white p-6 shadow-sm"><h2 className="font-semibold">Configured accounts</h2><div className="mt-4 space-y-3">{accounts.data.accounts.map((account) => <div key={account.id} className="flex items-center justify-between rounded-xl border border-[#edf0ee] p-4"><div><p className="text-sm font-semibold">PayPal · {account.maskedAccount}</p><p className="mt-1 text-xs text-[#8b9793]">{account.countryCode} · {account.shareBps / 100}% creator reserve · priority {account.priority}</p></div><CheckCircle2 className="text-[#287b5b]" size={18} /></div>)}</div></section> : null}</div></div>
+}
+
+export default CreatorPayoutPage

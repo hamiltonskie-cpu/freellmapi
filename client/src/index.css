@@ -161,6 +161,25 @@
     }
 }
 
+@keyframes industry-pulse {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-3px) rotate(2deg); }
+}
+
+.industry-pulse {
+    animation: industry-pulse 4s ease-in-out infinite;
+}
+
+.industry-mint { background: #d9f3e8; color: #287b5b; }
+.industry-blue { background: #dcecff; color: #3d6b9d; }
+.industry-yellow { background: #fff1c8; color: #94701a; }
+.industry-coral { background: #ffe2d9; color: #a64d39; }
+.industry-lavender { background: #e9e1ff; color: #6d56a6; }
+
+@media (prefers-reduced-motion: reduce) {
+    .industry-pulse { animation: none; }
+}
+
 /* ── Syntax highlighting (highlight.js spans, see lib/highlight.ts) ─────────
    One restrained palette per theme: keywords and tags carry the accent,
    strings warm, comments recede, everything else stays the text colour. */

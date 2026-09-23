@@ -2,7 +2,7 @@
 
 # Docker
 
-The production image, the Compose quickstart, and everything about running FreeLLMAPI in a container: persistence, ports, health, and the networking gotchas.
+The production image, the Compose quickstart, and everything about running Dea Foundations in a container: persistence, ports, health, and the networking gotchas.
 
 - [The image](#the-image)
 - [Compose quickstart](#compose-quickstart)
@@ -15,7 +15,7 @@ The production image, the Compose quickstart, and everything about running FreeL
 
 ## The image
 
-FreeLLMAPI publishes a single production image containing the Express server and the built React dashboard:
+Dea Foundations publishes a single production image containing the Express server and the built React dashboard:
 
 ```bash
 docker pull ghcr.io/tashfeenahmed/freellmapi:latest   # or pin a release, e.g. :v1.2.3
@@ -97,7 +97,7 @@ A related packaging subtlety: npm nests some production packages under the works
 
 Providers unreachable from the container, but fine from the host? A container has its own network stack, so two things that work on your machine do not carry over:
 
-- **A proxy on `127.0.0.1` is not your machine.** Inside the container, loopback is the container itself. If you reach providers through a proxy client on the host (Clash, v2rayN, sing-box, a corporate proxy), point FreeLLMAPI at the host instead: `PROXY_URL=socks5h://host.docker.internal:7890`. The bundled `docker-compose.yml` maps `host.docker.internal` to the host gateway via `extra_hosts`, so this works on plain Linux Docker as well as Docker Desktop. The proxy also has to accept connections from outside loopback (in Clash, `allow-lan: true`). More detail in [03-outbound-proxies.md](../env/03-outbound-proxies.md#docker-127001-is-the-container).
+- **A proxy on `127.0.0.1` is not your machine.** Inside the container, loopback is the container itself. If you reach providers through a proxy client on the host (Clash, v2rayN, sing-box, a corporate proxy), point Dea Foundations at the host instead: `PROXY_URL=socks5h://host.docker.internal:7890`. The bundled `docker-compose.yml` maps `host.docker.internal` to the host gateway via `extra_hosts`, so this works on plain Linux Docker as well as Docker Desktop. The proxy also has to accept connections from outside loopback (in Clash, `allow-lan: true`). More detail in [03-outbound-proxies.md](../env/03-outbound-proxies.md#docker-127001-is-the-container).
 - **An IPv6-only host needs IPv6 enabled in Docker.** The default bridge network is IPv4-only, so on a host with no IPv4 route the container cannot reach anything, DNS included. Enable it in `/etc/docker/daemon.json` with `"ipv6": true`, `"ip6tables": true` and a `"fixed-cidr-v6"` range, then restart Docker.
 
 To see which case you are hitting, ask the container directly:

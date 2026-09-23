@@ -1,7 +1,7 @@
 {
   "name": "freellmapi",
   "version": "0.6.0",
-  "description": "Set up coding agents to use a FreeLLMAPI gateway",
+  "description": "Set up coding agents to use a Dea Foundations gateway",
   "license": "MIT",
   "repository": {
     "type": "git",

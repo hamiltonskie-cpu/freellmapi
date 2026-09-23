@@ -4,7 +4,7 @@
 
 [← Back to README](../README.md) · [Documentation index](../README.md)
 
-Everything about getting FreeLLMAPI running: the one-liner, Docker Compose, local development, declarative config, production builds, the desktop app, where your data lives, and how to reset a password, read the logs, or uninstall.
+Everything about getting Dea Foundations running: the one-liner, Docker Compose, local development, declarative config, production builds, the desktop app, where your data lives, and how to reset a password, read the logs, or uninstall.
 
 - [Quick start (one-liner)](#quick-start-one-liner)
 - [Docker Compose](#docker-compose)
@@ -73,7 +73,7 @@ docker compose up -d
 
 > **Providers unreachable from the container, but fine from the host?** A container has its own network stack, so two things that work on your machine do not carry over:
 >
-> - **A proxy on `127.0.0.1` is not your machine.** Inside the container, loopback is the container itself. If you reach providers through a proxy client on the host (Clash, v2rayN, sing-box, a corporate proxy), point FreeLLMAPI at the host instead: `PROXY_URL=socks5h://host.docker.internal:7890`. The bundled `docker-compose.yml` maps `host.docker.internal` to the host gateway, so this works on plain Linux Docker as well as Docker Desktop. The proxy also has to accept connections from outside loopback (in Clash, `allow-lan: true`).
+> - **A proxy on `127.0.0.1` is not your machine.** Inside the container, loopback is the container itself. If you reach providers through a proxy client on the host (Clash, v2rayN, sing-box, a corporate proxy), point Dea Foundations at the host instead: `PROXY_URL=socks5h://host.docker.internal:7890`. The bundled `docker-compose.yml` maps `host.docker.internal` to the host gateway, so this works on plain Linux Docker as well as Docker Desktop. The proxy also has to accept connections from outside loopback (in Clash, `allow-lan: true`).
 > - **An IPv6-only host needs IPv6 enabled in Docker.** The default bridge network is IPv4-only, so on a host with no IPv4 route the container cannot reach anything, DNS included. Enable it in `/etc/docker/daemon.json` with `"ipv6": true`, `"ip6tables": true` and a `"fixed-cidr-v6"` range, then restart Docker.
 >
 > To see which of these you are hitting, ask the container directly:
@@ -159,7 +159,7 @@ node server/dist/index.js     # server + dashboard both served on :3001
 
 ## Declarative startup config
 
-For repeatable Docker/server installs, FreeLLMAPI can apply a JSON config on
+For repeatable Docker/server installs, Dea Foundations can apply a JSON config on
 every boot. Set `FREEAPI_CONFIG_PATH=/path/to/freellmapi.config.json` or put the
 same JSON in `FREEAPI_CONFIG_JSON`. The config is idempotent: existing keys,
 custom providers, model edits, fallback rows, and routing settings are updated
@@ -208,7 +208,7 @@ than one endpoint is rejected rather than applied to an arbitrary one:
 
 ## Docker image & operations
 
-FreeLLMAPI publishes a single production image that contains the Express server and the built React dashboard:
+Dea Foundations publishes a single production image that contains the Express server and the built React dashboard:
 
 ```bash
 docker pull ghcr.io/tashfeenahmed/freellmapi:latest   # or pin a release, e.g. :v1.2.3
@@ -243,7 +243,7 @@ FREEAPI_DB_BACKUP_KEY=64-char-hex-backup-key
 FREEAPI_DB_BACKUP_INTERVAL_MS=300000
 ```
 
-When the database file is missing at startup, FreeLLMAPI restores the backup
+When the database file is missing at startup, Dea Foundations restores the backup
 before migrations run. While the server is running it uploads a fresh encrypted
 backup periodically. If `FREEAPI_DB_BACKUP_KEY` is omitted, the app uses
 `ENCRYPTION_KEY` for the backup envelope too.
@@ -256,7 +256,7 @@ A native menu-bar app lives in [`desktop/`](../desktop): the entire router +
 dashboard running locally from your tray, with a glass popover showing live
 request stats.
 
-![FreeLLMAPI desktop app](../../../repo-assets/desktop.png)
+![Dea Foundations desktop app](../../../repo-assets/desktop.png)
 
 **[Download from Releases](https://github.com/tashfeenahmed/freellmapi/releases/latest)** — the macOS `.dmg` and the Windows `.exe` installer are built and attached to every release by the [`desktop-release`](../../../.github/workflows/desktop-release.yml) workflow. Or build it from this repo in a few minutes:
 
@@ -267,9 +267,9 @@ request stats.
 ```bash
 npm install
 npm install --prefix desktop  # install desktop dependencies
-npm run desktop:dist          # macOS  → desktop/dist-electron/FreeLLMAPI-…-arm64.dmg
-npm run desktop:dist:mac:x64  # Intel Mac → desktop/dist-electron/FreeLLMAPI-…-x64.dmg
-npm run desktop:dist:win      # Windows → "desktop/dist-electron/FreeLLMAPI Setup ….exe"
+npm run desktop:dist          # macOS  → desktop/dist-electron/Dea Foundations-…-arm64.dmg
+npm run desktop:dist:mac:x64  # Intel Mac → desktop/dist-electron/Dea Foundations-…-x64.dmg
+npm run desktop:dist:win      # Windows → "desktop/dist-electron/Dea Foundations Setup ….exe"
 ```
 
 > Locally built apps are unsigned, so Windows SmartScreen may warn on first run
@@ -296,9 +296,9 @@ another machine or into a container):
 
 | OS | Location |
 |----|----------|
-| Windows | `%APPDATA%\FreeLLMAPI\` (e.g. `C:\Users\<you>\AppData\Roaming\FreeLLMAPI\`) |
-| macOS | `~/Library/Application Support/FreeLLMAPI/` |
-| Linux | `~/.config/FreeLLMAPI/` |
+| Windows | `%APPDATA%\Dea Foundations\` (e.g. `C:\Users\<you>\AppData\Roaming\Dea Foundations\`) |
+| macOS | `~/Library/Application Support/Dea Foundations/` |
+| Linux | `~/.config/Dea Foundations/` |
 
 That folder holds `freeapi.db` (all keys, models, settings, encrypted at rest),
 `config.json` (window/theme/port/LAN preferences) and `logs/freeapi.log` (what
@@ -346,7 +346,7 @@ rather than clicking repeatedly.
 The desktop app has no terminal attached, so it also tees everything it prints
 to a file: `freeapi.log` in the `logs` folder inside the data directory listed
 [above](#credentials-and-where-your-data-lives) — for example
-`~/Library/Application Support/FreeLLMAPI/logs/freeapi.log` on macOS. It keeps
+`~/Library/Application Support/Dea Foundations/logs/freeapi.log` on macOS. It keeps
 the current file plus one rotated `freeapi.log.1`, 1 MB each. Open it in any
 text editor; the reset code above appears there too.
 
@@ -358,16 +358,16 @@ the top.
 
 **Desktop app**
 
-1. Quit from the tray menu (**Quit FreeLLMAPI**). If you turned on *Start at
+1. Quit from the tray menu (**Quit Dea Foundations**). If you turned on *Start at
    login* in the popover, switch it off first so no stale login item is left.
 2. Remove the application:
-   - **macOS** — drag `FreeLLMAPI.app` from `/Applications` to the Trash.
-   - **Windows** — *Settings → Apps → Installed apps → FreeLLMAPI → Uninstall*.
+   - **macOS** — drag `Dea Foundations.app` from `/Applications` to the Trash.
+   - **Windows** — *Settings → Apps → Installed apps → Dea Foundations → Uninstall*.
    - **Linux** — delete the AppImage, `sudo apt remove freellmapi` for the `.deb`, or `sudo dnf remove freellmapi` for the `.rpm`.
 3. Delete the data directory to remove your keys, settings and logs for good:
-   - **Windows** — `%APPDATA%\FreeLLMAPI\`
-   - **macOS** — `~/Library/Application Support/FreeLLMAPI/`
-   - **Linux** — `~/.config/FreeLLMAPI/`
+   - **Windows** — `%APPDATA%\Dea Foundations\`
+   - **macOS** — `~/Library/Application Support/Dea Foundations/`
+   - **Linux** — `~/.config/Dea Foundations/`
 
 **Docker**
 

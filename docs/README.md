@@ -1,4 +1,4 @@
-# FreeLLMAPI documentation
+# Dea Foundations documentation
 
 Pick a language:
 

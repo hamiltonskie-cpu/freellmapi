@@ -1,4 +1,4 @@
-# FreeLLMAPI Desktop
+# Dea Foundations Desktop
 
 Lean Electron menu-bar app for [freellmapi](https://github.com/tashfeenahmed/freellmapi):
 runs the whole router locally on `127.0.0.1:31415`, with a dark-glass tray
@@ -26,9 +26,9 @@ From the **repo root** (one-time client build + package):
 ```bash
 npm install
 npm install --prefix desktop  # install desktop dependencies
-npm run desktop:dist          # macOS → desktop/dist-electron/FreeLLMAPI-…-arm64.dmg
-npm run desktop:dist:mac:x64  # Intel Mac → desktop/dist-electron/FreeLLMAPI-…-x64.dmg
-npm run desktop:dist:win      # Windows → desktop/dist-electron/FreeLLMAPI-…-x64 installer
+npm run desktop:dist          # macOS → desktop/dist-electron/Dea Foundations-…-arm64.dmg
+npm run desktop:dist:mac:x64  # Intel Mac → desktop/dist-electron/Dea Foundations-…-x64.dmg
+npm run desktop:dist:win      # Windows → desktop/dist-electron/Dea Foundations-…-x64 installer
 ```
 
 Both Mac commands also produce a ZIP. Prefer building on the matching Mac
@@ -64,8 +64,8 @@ open for real-screen captures.
 
 ## Notes
 
-- DB + config live in `~/Library/Application Support/FreeLLMAPI/` (macOS) /
-  `%APPDATA%/FreeLLMAPI/` (Windows).
+- DB + config live in `~/Library/Application Support/Dea Foundations/` (macOS) /
+  `%APPDATA%/Dea Foundations/` (Windows).
 - The server binds loopback only; default port 31415, scan-up on conflict,
   resolved port persisted.
 - Do not run plain `npm rebuild` here — it rebuilds better-sqlite3 for the

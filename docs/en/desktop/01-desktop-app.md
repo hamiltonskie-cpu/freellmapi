@@ -26,7 +26,7 @@ bundle:server → build:main / build:preload → stage:client → electron-build
 | `<userData>/backups` | Server dumps (`services/backups.ts` `dataDir()`) |
 | `Resources/client-dist` | Packaged client; dev: `client/dist` via `FREEAPI_REPO` |
 
-`~/Library/Application Support/FreeLLMAPI` (macOS), `%APPDATA%/FreeLLMAPI` (Windows), `~/.config/FreeLLMAPI` (Linux).
+`~/Library/Application Support/Dea Foundations` (macOS), `%APPDATA%/Dea Foundations` (Windows), `~/.config/Dea Foundations` (Linux).
 
 ## Embedded server-host
 
@@ -50,7 +50,7 @@ Deliberately NOT mirrored: `restoreDbBackupIfNeeded`/`startDbBackupPump` (`FREEA
 
 ## Tray / popover / window
 
-- `desktop/src/tray.ts` — menu-bar icon, `Open Logs Folder` / `Open Backups Folder` (`logger.ts:openLogsFolder`/`openBackupsFolder` via `shell.openPath`), `Open FreeLLMAPI`, quit.
+- `desktop/src/tray.ts` — menu-bar icon, `Open Logs Folder` / `Open Backups Folder` (`logger.ts:openLogsFolder`/`openBackupsFolder` via `shell.openPath`), `Open Dea Foundations`, quit.
 - `desktop/src/popover.ts` — popover window for quick access.
 - `desktop/src/window.ts` — main BrowserWindow chrome.
 

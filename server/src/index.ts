@@ -20,6 +20,7 @@ import { warnOnRoutingOverrideDrift } from './services/model-weight-overrides.js
 import { installLogRedaction } from './lib/log-redaction.js';
 import { cleanupExpiredCooldowns } from './services/ratelimit.js';
 import { loadCacheFromDb } from './services/cache.js';
+ import { startWorkspaceBotScheduler } from './services/workspace-bots.js';
 
 // Before any other statement runs, so no provider key can reach stdout — users
 // paste server output into bug reports. Module scope, not inside main(), so it
@@ -85,6 +86,7 @@ async function main() {
     startDbBackupPump(getDb(), scheduler, config.dbPath ?? undefined);
     startBackupScheduler(scheduler);
     startCustomModelSync(getDb(), scheduler);
+    startWorkspaceBotScheduler(scheduler);
 
     // Post-sleep recovery: while the host was suspended (laptop lid, VM
     // pause) timers and keep-alive sockets froze, so the first requests after
@@ -122,6 +124,9 @@ async function main() {
 
   const server = app.listen(Number(PORT), HOST, onReady(HOST));
   tuneKeepAlive(server);
+  server.requestTimeout = 120_000;
+  server.headersTimeout = 76_000;
+  server.maxHeadersCount = 100;
   server.on('error', (err: NodeJS.ErrnoException) => {
     // The default '::' bind fails where IPv6 is disabled (kernel
     // ipv6.disable=1 and the like) — retry IPv4-only rather than dying.

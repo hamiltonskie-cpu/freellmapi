@@ -42,6 +42,15 @@ import LogsPage from '@/pages/LogsPage'
 import PremiumPage from '@/pages/PremiumPage'
 import NotFoundPage from '@/pages/NotFoundPage'
 import AgentsPage from '@/pages/AgentsPage'
+import HospitalSchedulePage from '@/pages/HospitalSchedulePage'
+import WorkspaceOperationsPage from '@/pages/WorkspaceOperationsPage'
+import CreatorPayoutPage from '@/pages/CreatorPayoutPage'
+import IndustryStudioPage from '@/pages/IndustryStudioPage'
+import BotCommandCenterPage from '@/pages/BotCommandCenterPage'
+import ClientManagementPage from '@/pages/ClientManagementPage'
+import ClientPortalPage from '@/pages/ClientPortalPage'
+import SecurityCenterPage from '@/pages/SecurityCenterPage'
+import MissionPage from '@/pages/MissionPage'
 
 // Every failed mutation surfaces as an error toast, so no action fails
 // silently. A page that already shows the failure inline can opt out with
@@ -132,10 +141,12 @@ function NavItem({ to, children }: { to: string; children: React.ReactNode }) {
 }
 
 function Brand() {
+  const location = useLocation()
+  const isHospital = location.pathname === '/hospital'
   return (
     <Link to="/" className="flex items-center gap-2 transition-opacity hover:opacity-70">
-      <span className="inline-block size-2 rounded-full bg-foreground" />
-      <span className="font-semibold tracking-tight text-sm">FreeLLMAPI</span>
+      <span className={`inline-block size-2 rounded-full ${isHospital ? 'bg-[#287b5b]' : 'bg-foreground'}`} />
+      <span className="font-semibold tracking-tight text-sm">Dea Foundations</span>
     </Link>
   )
 }
@@ -227,6 +238,7 @@ function Navbar() {
   const { t } = useI18n()
   const location = useLocation()
   const navigate = useNavigate()
+  const isHospital = location.pathname === '/hospital'
   const [settingsOpen, setSettingsOpen] = useState(false)
   const [credentialsMode, setCredentialsMode] = useState<'password' | 'email' | null>(null)
   const { data: premium, licensed, isLoading: premiumLoading, isError: premiumError } = usePremium()
@@ -249,7 +261,7 @@ function Navbar() {
         >
           <Brand />
           <nav
-            className="ms-10 hidden items-center gap-6 md:flex"
+            className={`ms-10 hidden items-center gap-6 md:flex ${isHospital ? 'invisible' : ''}`}
             style={isDesktopApp ? ({ WebkitAppRegion: 'no-drag' } as React.CSSProperties) : undefined}
           >
             {navItems.map((item) => {
@@ -281,6 +293,7 @@ function Navbar() {
                 </NavItem>
               )
             })}
+            <NavItem to="/mission">Foundation</NavItem>
           </nav>
           <div
             className="ms-auto hidden items-center gap-1 md:flex"
@@ -450,7 +463,16 @@ function App() {
                 <PageContainer>
                   <PageBoundary>
                     <Routes>
-                      <Route path="/" element={<Navigate to="/models/chat" replace />} />
+                      <Route path="/" element={<Navigate to="/hospital" replace />} />
+                      <Route path="/hospital" element={<HospitalSchedulePage />} />
+                      <Route path="/operations" element={<WorkspaceOperationsPage />} />
+                      <Route path="/creator-payouts" element={<CreatorPayoutPage />} />
+                      <Route path="/industry-studio" element={<IndustryStudioPage />} />
+                      <Route path="/bot-command-center" element={<BotCommandCenterPage />} />
+                      <Route path="/client-management" element={<ClientManagementPage />} />
+                      <Route path="/client-portal/:token" element={<ClientPortalPage />} />
+                      <Route path="/security-center" element={<SecurityCenterPage />} />
+                      <Route path="/mission" element={<MissionPage />} />
                       <Route path="/models" element={<Navigate to="/models/chat" replace />} />
                       <Route path="/models/chat" element={<FallbackPage />} />
                       <Route path="/models/chat/:id" element={<ModelDetailPage />} />

@@ -21,7 +21,7 @@ export class SeptorProvider extends OpenAICompatProvider {
     // on self-hosted VPS installs (#1298). A product UA passes.
     super({
       platform: 'septor', name: 'Septor Labs', baseUrl: 'https://api.septorlabs.com/v1',
-      extraHeaders: { 'User-Agent': 'FreeLLMAPI/1.0' },
+      extraHeaders: { 'User-Agent': 'Dea Foundations/1.0' },
     });
   }
 

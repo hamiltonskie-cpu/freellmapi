@@ -1,6 +1,6 @@
 # freellmapi
 
-Point your coding agent at a [FreeLLMAPI](https://github.com/tashfeenahmed/freellmapi)
+Point your coding agent at a [Dea Foundations](https://github.com/tashfeenahmed/freellmapi)
 gateway in one command. The generators read the models your server is actually
 serving and write the config file each tool expects.
 
@@ -8,7 +8,7 @@ serving and write the config file each tool expects.
 npx freellmapi setup-claude --url http://localhost:3001 --api-key <your-key>
 ```
 
-No install step, no account. The unified API key comes from your FreeLLMAPI
+No install step, no account. The unified API key comes from your Dea Foundations
 dashboard (or the tray popover in the desktop app).
 
 ## Commands
@@ -60,7 +60,7 @@ them into the child process environment for that run only.
 
 ## Requirements
 
-Node.js >= 20.18. A running FreeLLMAPI gateway
+Node.js >= 20.18. A running Dea Foundations gateway
 ([install guide](https://github.com/tashfeenahmed/freellmapi/blob/main/docs/en/install/01-install.md)).
 
 ## Links

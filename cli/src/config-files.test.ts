@@ -23,11 +23,11 @@ describe('safe config writes', () => {
   it('renders a fresh Continue config idempotently', () => {
     const generated = [
       '# freellmapi:start',
-      'name: FreeLLMAPI',
+      'name: Dea Foundations',
       'version: 1.0.0',
       'schema: v1',
       'models:',
-      '  - name: FreeLLMAPI',
+      '  - name: Dea Foundations',
       '    provider: openai',
       '    model: coder',
       '# freellmapi:end',
@@ -91,11 +91,11 @@ describe('safe config writes', () => {
     ].join('\n');
     const generated = [
       '# freellmapi:start',
-      'name: FreeLLMAPI',
+      'name: Dea Foundations',
       'version: 1.0.0',
       'schema: v1',
       'models:',
-      '  - name: FreeLLMAPI',
+      '  - name: Dea Foundations',
       '    provider: openai',
       '    model: coder',
       '# freellmapi:end',
@@ -115,7 +115,7 @@ describe('safe config writes', () => {
     expect(first).toContain('# personal config');
     expect(first).toContain('name: Personal');
     expect(first).toContain('  - name: Existing');
-    expect(first).toContain('  - name: FreeLLMAPI');
+    expect(first).toContain('  - name: Dea Foundations');
     expect(first).toContain('rules:\n  - Keep this rule');
     expect(first.match(/^models:$/gm)).toHaveLength(1);
   });
@@ -131,7 +131,7 @@ describe('safe config writes', () => {
       '    model: qwen',
       '# freellmapi:start',
       'models:',
-      '  - name: FreeLLMAPI',
+      '  - name: Dea Foundations',
       '    provider: openai',
       '    model: old',
       '# freellmapi:end',
@@ -139,11 +139,11 @@ describe('safe config writes', () => {
     ].join('\n');
     const generated = [
       '# freellmapi:start',
-      'name: FreeLLMAPI',
+      'name: Dea Foundations',
       'version: 1.0.0',
       'schema: v1',
       'models:',
-      '  - name: FreeLLMAPI',
+      '  - name: Dea Foundations',
       '    provider: openai',
       '    model: current',
       '# freellmapi:end',
@@ -284,7 +284,7 @@ describe('safe config writes', () => {
       'model_provider = "freellmapi"',
       '',
       '[model_providers.freellmapi]',
-      'name = "FreeLLMAPI"',
+      'name = "Dea Foundations"',
       'base_url = "http://localhost:3000/v1"',
       '# freellmapi:end',
       '',
@@ -322,7 +322,7 @@ describe('safe config writes', () => {
       'model_provider = "freellmapi"',
       '',
       '[model_providers.freellmapi]',
-      'name = "FreeLLMAPI"',
+      'name = "Dea Foundations"',
       'base_url = "http://localhost:3000/v1"',
       '# freellmapi:end',
       '',
@@ -369,7 +369,7 @@ describe('safe config writes', () => {
       'model = "coder"',
       '',
       '[model_providers.freellmapi]',
-      'name = "FreeLLMAPI"',
+      'name = "Dea Foundations"',
       '# freellmapi:end',
       '',
     ].join('\n');

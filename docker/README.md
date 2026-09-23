@@ -1,6 +1,6 @@
 # Docker Guide
 
-Docker Compose is the recommended way to run FreeLLMAPI for personal use. The container serves the Express API and the built React dashboard from one process on port 3001, with SQLite persisted in a named volume.
+Docker Compose is the recommended way to run Dea Foundations for personal use. The container serves the Express API and the built React dashboard from one process on port 3001, with SQLite persisted in a named volume.
 
 ## Prerequisites
 
@@ -33,7 +33,7 @@ curl http://localhost:3001/v1/chat/completions \
   -H "Content-Type: application/json" \
   -d '{
     "model": "auto",
-    "messages": [{"role": "user", "content": "Say hello from FreeLLMAPI."}]
+    "messages": [{"role": "user", "content": "Say hello from Dea Foundations."}]
   }'
 ```
 
