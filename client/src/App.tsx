@@ -44,12 +44,13 @@ import NotFoundPage from '@/pages/NotFoundPage'
 import AgentsPage from '@/pages/AgentsPage'
 import HospitalSchedulePage from '@/pages/HospitalSchedulePage'
 import WorkspaceOperationsPage from '@/pages/WorkspaceOperationsPage'
-import CreatorPayoutPage from '@/pages/CreatorPayoutPage'
+import CreatorPayoutDashboardPage from '@/pages/CreatorPayoutDashboardPage'
 import IndustryStudioPage from '@/pages/IndustryStudioPage'
 import BotCommandCenterPage from '@/pages/BotCommandCenterPage'
 import ClientManagementPage from '@/pages/ClientManagementPage'
 import ClientPortalPage from '@/pages/ClientPortalPage'
 import SecurityCenterPage from '@/pages/SecurityCenterPage'
+import PayPalReturnPage from '@/pages/PayPalReturnPage'
 import MissionPage from '@/pages/MissionPage'
 
 // Every failed mutation surfaces as an error toast, so no action fails
@@ -466,12 +467,13 @@ function App() {
                       <Route path="/" element={<Navigate to="/hospital" replace />} />
                       <Route path="/hospital" element={<HospitalSchedulePage />} />
                       <Route path="/operations" element={<WorkspaceOperationsPage />} />
-                      <Route path="/creator-payouts" element={<CreatorPayoutPage />} />
+                      <Route path="/creator-payouts" element={<CreatorPayoutDashboardPage />} />
                       <Route path="/industry-studio" element={<IndustryStudioPage />} />
                       <Route path="/bot-command-center" element={<BotCommandCenterPage />} />
                       <Route path="/client-management" element={<ClientManagementPage />} />
                       <Route path="/client-portal/:token" element={<ClientPortalPage />} />
                       <Route path="/security-center" element={<SecurityCenterPage />} />
+                      <Route path="/paypal-return" element={<PayPalReturnPage />} />
                       <Route path="/mission" element={<MissionPage />} />
                       <Route path="/models" element={<Navigate to="/models/chat" replace />} />
                       <Route path="/models/chat" element={<FallbackPage />} />

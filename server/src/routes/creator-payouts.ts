@@ -1,7 +1,8 @@
 import { Router } from 'express';
 import type { Request, Response } from 'express';
 import { z } from 'zod';
-import { configureCreatorPayPal, listCreatorPayoutAccounts } from '../services/creator-payouts.js';
+import { configureCreatorPayPal, listCreatorPayoutAccounts, listCreatorPayoutAllocations } from '../services/creator-payouts.js';
+import { submitCreatorPayPalPayout } from '../services/paypal-checkout.js';
 
 export const creatorPayoutsRouter = Router();
 const paypalSchema = z.object({
@@ -15,7 +16,11 @@ function userId(req: Request): number {
 }
 
 creatorPayoutsRouter.get('/', (req: Request, res: Response) => {
-  res.json({ accounts: listCreatorPayoutAccounts(userId(req)) });
+  res.json({ accounts: listCreatorPayoutAccounts(userId(req)), allocations: listCreatorPayoutAllocations(userId(req)) });
+});
+
+creatorPayoutsRouter.post('/allocations/:allocationId/submit', async (req: Request, res: Response) => {
+  res.json(await submitCreatorPayPalPayout(userId(req), Number(req.params.allocationId)));
 });
 
 creatorPayoutsRouter.post('/paypal', (req: Request, res: Response) => {

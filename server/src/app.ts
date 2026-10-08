@@ -39,6 +39,7 @@ import { creatorPayoutsRouter } from './routes/creator-payouts.js';
 import { clientManagementRouter } from './routes/client-management.js';
 import { clientPortalRouter } from './routes/client-portal.js';
 import { securityCenterRouter } from './routes/security-center.js';
+import { paypalWebhookRouter } from './routes/paypal-webhook.js';
 import { requireAuth } from './middleware/requireAuth.js';
 import { createProxyRateLimiter, createAdminRateLimiter } from './middleware/rateLimit.js';
 import { networkSecurity } from './middleware/networkSecurity.js';
@@ -191,6 +192,11 @@ export function createApp(config?: Config) {
       callback(null, !origin || allowedCorsOrigins.has(origin));
     },
   }));
+  // PayPal's public webhook is authenticated by signature verification, not a
+  // dashboard session. Keep its resource ceiling and unauthenticated request
+  // budget much tighter than the general API defaults.
+  app.use('/api/paypal/webhook', createAdminRateLimiter(30));
+  app.use('/api/paypal/webhook', express.json({ limit: '256kb' }));
   // Two-tier JSON body limits. The LLM wire surfaces carry vision payloads —
   // base64 images inline in the body (~33% inflation; google.ts forwards
   // images up to 8MB apiece) — so a single-screenshot Codex turn can clear
@@ -286,6 +292,7 @@ export function createApp(config?: Config) {
   app.use('/api/client-management', requireAuth, clientManagementRouter);
   app.use('/api/client-portal', clientPortalRouter);
   app.use('/api/security-center', requireAuth, securityCenterRouter);
+  app.use('/api/paypal', paypalWebhookRouter);
 
   // Health check — no auth required.
   app.get('/api/ping', (_req, res) => {

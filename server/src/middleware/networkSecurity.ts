@@ -2,10 +2,11 @@ import type { Request, Response, NextFunction } from 'express';
 
 const MAX_URL_LENGTH = 8 * 1024;
 const MAX_HEADER_BYTES = 32 * 1024;
+const ALLOWED_METHODS = new Set(['GET', 'HEAD', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS']);
 
 /** Application-layer firewall for requests that made it to Express. */
 export function networkSecurity(req: Request, res: Response, next: NextFunction): void {
-  if (req.method === 'TRACE' || req.method === 'TRACK' || req.method === 'CONNECT') {
+  if (!ALLOWED_METHODS.has(req.method)) {
     res.status(405).setHeader('Allow', 'GET, HEAD, POST, PUT, PATCH, DELETE, OPTIONS').json({
       error: { message: 'HTTP method not allowed.', type: 'method_not_allowed' },
     });

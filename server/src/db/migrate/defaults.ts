@@ -43,6 +43,7 @@ import * as workspaceIndustry from '../migrations/20260923_000004_workspace_indu
 import * as engineeringBot from '../migrations/20260923_000005_engineering_bot.js';
 import * as clientOnboarding from '../migrations/20260923_000006_client_onboarding.js';
 import * as securityProfilesIncidents from '../migrations/20260923_000007_security_profiles_incidents.js';
+import * as paypalCheckout from '../migrations/20261008_000001_paypal_checkout.js';
 
 export interface MigrationModule {
   up(db: Db): void;
@@ -98,6 +99,7 @@ export const WORKSPACE_INDUSTRY_FILENAME = '20260923_000004_workspace_industry.t
 export const ENGINEERING_BOT_FILENAME = '20260923_000005_engineering_bot.ts';
 export const CLIENT_ONBOARDING_FILENAME = '20260923_000006_client_onboarding.ts';
 export const SECURITY_PROFILES_INCIDENTS_FILENAME = '20260923_000007_security_profiles_incidents.ts';
+export const PAYPAL_CHECKOUT_FILENAME = '20261008_000001_paypal_checkout.ts';
 
 export const DEFAULT_MIGRATIONS: readonly DefaultMigration[] = [
   { filename: LEGACY_BASELINE_FILENAME, module: legacyBaseline },
@@ -144,4 +146,5 @@ export const DEFAULT_MIGRATIONS: readonly DefaultMigration[] = [
   { filename: ENGINEERING_BOT_FILENAME, module: engineeringBot },
   { filename: CLIENT_ONBOARDING_FILENAME, module: clientOnboarding },
   { filename: SECURITY_PROFILES_INCIDENTS_FILENAME, module: securityProfilesIncidents },
+  { filename: PAYPAL_CHECKOUT_FILENAME, module: paypalCheckout },
 ];

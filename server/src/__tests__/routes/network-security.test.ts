@@ -36,6 +36,11 @@ describe('application network security', () => {
     expect(result.status).toBe(405);
   });
 
+  it('rejects unrecognized HTTP methods', async () => {
+    const result = await request(app, 'PROPFIND', '/api/ping');
+    expect(result.status).toBe(405);
+  });
+
   it('rejects oversized request URLs', async () => {
     const result = await request(app, 'GET', `/api/ping?value=${'x'.repeat(8192)}`);
     expect(result.status).toBe(414);

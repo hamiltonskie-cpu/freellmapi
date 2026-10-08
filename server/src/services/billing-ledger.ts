@@ -29,7 +29,7 @@ function getIntent(workspaceId: number, id: number): PaymentIntent {
 
 export function createPaymentIntent(userId: number, input: { workspaceId: number; amountMinor: number; currency: string; description?: string; idempotencyKey: string }): PaymentIntent {
   const workspace = requireWorkspaceMember(userId, input.workspaceId);
-  if (workspace.paymentProvider !== 'internal') {
+  if (workspace.paymentProvider !== 'internal' && workspace.paymentProvider !== 'paypal') {
     throw Object.assign(new Error(`${workspace.paymentProvider} is configured for this workspace, but its merchant adapter is not configured yet.`), { status: 501 });
   }
   const currency = input.currency.trim().toUpperCase();
@@ -55,7 +55,8 @@ export function setComplianceStatus(userId: number, workspaceId: number, intentI
 }
 
 export function settlePayment(userId: number, workspaceId: number, intentId: number): PaymentIntent {
-  requireWorkspaceMember(userId, workspaceId);
+  const workspace = requireWorkspaceMember(userId, workspaceId);
+  if (workspace.paymentProvider === 'paypal') throw Object.assign(new Error('PayPal payments are settled only by a verified PayPal webhook.'), { status: 403 });
   const db = getDb();
   const intent = getIntent(workspaceId, intentId);
   if (intent.complianceStatus !== 'approved') throw Object.assign(new Error('Payment must pass compliance review before settlement.'), { status: 403 });

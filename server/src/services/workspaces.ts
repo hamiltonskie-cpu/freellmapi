@@ -11,7 +11,7 @@ export type Workspace = {
   industryCode: IndustryCode;
   createdAt: string;
 };
-export type PaymentProvider = 'internal' | 'payfast' | 'yoco';
+export type PaymentProvider = 'internal' | 'paypal' | 'payfast' | 'yoco';
 export type IndustryCode = 'healthcare' | 'financial-services' | 'retail' | 'logistics' | 'professional-services';
 
 type WorkspaceRow = { id: number; name: string; kind: WorkspaceKind; currency: string; country_code: string; payment_provider: PaymentProvider; industry_code: IndustryCode; created_at: string };
@@ -79,5 +79,5 @@ export const DEFAULT_BOTS = [
   { slug: 'engineering-assistant', name: 'Engineering assistant', purpose: 'Turns client needs into technical work, release checks, and reliability follow-ups.', category: 'operations' },
 ] as const;
 
-export const SUPPORTED_PAYMENT_PROVIDERS: readonly PaymentProvider[] = ['internal', 'payfast', 'yoco'];
+export const SUPPORTED_PAYMENT_PROVIDERS: readonly PaymentProvider[] = ['internal', 'paypal', 'payfast', 'yoco'];
 export const SUPPORTED_INDUSTRIES: readonly IndustryCode[] = ['healthcare', 'financial-services', 'retail', 'logistics', 'professional-services'];

@@ -10,7 +10,7 @@ const workspaceSchema = z.object({
   kind: z.enum(['company', 'hospital']),
   currency: z.string().trim().length(3).regex(/^[A-Za-z]{3}$/).optional(),
   countryCode: z.string().trim().length(2).regex(/^[A-Za-z]{2}$/).optional(),
-  paymentProvider: z.enum(['internal', 'payfast', 'yoco']).optional(),
+  paymentProvider: z.enum(['internal', 'paypal', 'payfast', 'yoco']).optional(),
   industryCode: z.enum(['healthcare', 'financial-services', 'retail', 'logistics', 'professional-services']).optional(),
 }).strict();
 

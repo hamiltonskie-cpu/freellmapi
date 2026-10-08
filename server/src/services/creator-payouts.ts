@@ -36,3 +36,17 @@ export function allocateCreatorShare(workspaceId: number, paymentIntentId: numbe
   db.prepare(`INSERT OR IGNORE INTO creator_payout_allocations (payment_intent_id, payout_account_id, workspace_id, amount_minor, currency) VALUES (?, ?, ?, ?, ?)`)
     .run(paymentIntentId, row.id, workspaceId, creatorAmount, currency);
 }
+
+export function listCreatorPayoutAllocations(userId: number) {
+  return getDb().prepare(`
+    SELECT p.id, p.payment_intent_id AS paymentIntentId, p.workspace_id AS workspaceId,
+      w.name AS workspaceName, p.amount_minor AS amountMinor, p.currency, p.status,
+      p.provider_reference AS providerReference, p.created_at AS createdAt
+    FROM creator_payout_allocations p
+    JOIN creator_payout_accounts a ON a.id = p.payout_account_id
+    JOIN workspaces w ON w.id = p.workspace_id
+    WHERE a.owner_user_id = ?
+    ORDER BY p.created_at DESC, p.id DESC
+    LIMIT 100
+  `).all(userId);
+}

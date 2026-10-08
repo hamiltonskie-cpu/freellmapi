@@ -48,6 +48,7 @@ const WORKSPACE_INDUSTRY_FILENAME = '20260923_000004_workspace_industry.ts';
 const ENGINEERING_BOT_FILENAME = '20260923_000005_engineering_bot.ts';
 const CLIENT_ONBOARDING_FILENAME = '20260923_000006_client_onboarding.ts';
 const SECURITY_PROFILES_INCIDENTS_FILENAME = '20260923_000007_security_profiles_incidents.ts';
+const PAYPAL_CHECKOUT_FILENAME = '20261008_000001_paypal_checkout.ts';
 
 interface SchemaRow {
   type: string;
@@ -142,6 +143,7 @@ describe('migration round trip', () => {
         ENGINEERING_BOT_FILENAME,
         CLIENT_ONBOARDING_FILENAME,
         SECURITY_PROFILES_INCIDENTS_FILENAME,
+        PAYPAL_CHECKOUT_FILENAME,
       ]);
     } finally {
       db.close();

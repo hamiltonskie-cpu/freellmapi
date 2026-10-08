@@ -2,6 +2,7 @@ import { Router } from 'express';
 import type { Request, Response } from 'express';
 import { z } from 'zod';
 import { createPaymentIntent, getBalance, setComplianceStatus, settlePayment } from '../services/billing-ledger.js';
+import { capturePayPalOrder, createPayPalOrder, paypalStatus } from '../services/paypal-checkout.js';
 
 export const billingLedgerRouter = Router();
 const intentSchema = z.object({
@@ -41,4 +42,16 @@ billingLedgerRouter.post('/intents/:workspaceId/:intentId/compliance', (req: Req
 
 billingLedgerRouter.post('/intents/:workspaceId/:intentId/settle', (req: Request, res: Response) => {
   res.json({ intent: settlePayment(userId(req), Number(req.params.workspaceId), Number(req.params.intentId)) });
+});
+
+billingLedgerRouter.get('/paypal/status', (_req: Request, res: Response) => res.json(paypalStatus()));
+
+billingLedgerRouter.post('/intents/:workspaceId/:intentId/paypal-order', async (req: Request, res: Response) => {
+  const order = await createPayPalOrder(userId(req), Number(req.params.workspaceId), Number(req.params.intentId));
+  res.status(201).json(order);
+});
+
+billingLedgerRouter.post('/intents/:workspaceId/:intentId/paypal-capture', async (req: Request, res: Response) => {
+  const result = await capturePayPalOrder(userId(req), Number(req.params.workspaceId), Number(req.params.intentId));
+  res.json(result);
 });

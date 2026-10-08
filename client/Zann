@@ -1,0 +1,15 @@
+---
+
+title: Dea Foundations 
+
+---
+
+## Dea Foundations
+
+gh auth refresh -h github.com -s repo
+gh repo create hamiltonskie-cpu/dea-foundations --private
+git remote set-url origin <https://github.com/hamiltonskie-cpu/dea-foundations.git>
+git push -u origin main [E07]
+![Kitten](https://placekitten.com/300/150)
+
+This is a document with a top-level HTML heading

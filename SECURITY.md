@@ -122,6 +122,25 @@ credentials, signed webhook verification, refund handling, and local compliance
 review are configured; the server will return `501` rather than silently using
 the internal ledger for an external-provider workspace.
 
+### PayPal Checkout and creator transfers
+
+PayPal Checkout is configured with server-side `PAYPAL_CLIENT_ID`,
+`PAYPAL_CLIENT_SECRET`, `PAYPAL_WEBHOOK_ID`, `PAYPAL_RETURN_URL`, and
+`PAYPAL_CANCEL_URL`. Use sandbox credentials first. Register
+`https://<your-domain>/api/paypal/webhook` with PayPal for
+`PAYMENT.CAPTURE.COMPLETED`, `PAYMENT.PAYOUTSBATCH.SUCCESS`, and
+`PAYMENT.PAYOUTSBATCH.DENIED`. The server asks PayPal to verify each webhook
+signature before accepting it. A payment is credited only when the verified
+capture's order ID, amount, and currency exactly match the stored intent.
+
+Creator transfers use PayPal Payouts, which is separate from Checkout and may
+require PayPal to enable Payouts on the merchant account. It is disabled by
+default; set `PAYPAL_PAYOUTS_ENABLED=1` only after the business account has that
+permission and sandbox tests pass. A payout remains recorded as pending or
+failed until a verified payout webhook confirms its state. A timed-out submit
+reuses the stored idempotency ID; a confirmed failed attempt gets a new ID on
+explicit retry. No PayPal client secret belongs in the browser or repository.
+
 Do not add a user-supplied formula evaluator with `eval`, `Function`, or a
 general-purpose expression interpreter. Any future calculation endpoint must
 use an allowlisted operation set, finite-number checks, explicit bounds, and
